@@ -1,0 +1,62 @@
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Crear Proyecto Node en VSC 
+-----------------------------------------------------------------------------
+$ npm init -y
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+- Instalar librerias
+  - express
+  - socket.io 
+  - nodemon (solo para desarrollo: npm i -D nodemon)
+
+-----------------------------------------------------------------------------
+- Agregar archivo: .gitignore -> control de data al repo
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Configurar tareas de arranque del servidor
+-----------------------------------------------------------------------------
+ "start": "node server",
+"dev": "nodemon server"
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+ - Crear servidor con express
+     - Inicializamos nuestra aplicacion
+     - Creamos nuestro conexion socket
+
+  - Desde Socket.IO v3, debe habilitar explícitamente el uso compartido de recursos de origen cruzado (CORS).
+     // Creamos nuestro conexion socket
+        const io = require('socket.io')(server, {
+            cors: {
+                origin: "http://localhost:3001",
+                methods: ["GET", "POST"]
+            }
+        });
+
+ - Creamos respuestas a peticiones
+ - Iniciamos el servidor: npm run dev
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Publicar en Heroku: El repo debe ser: master
+-----------------------------------------------------------------------------
+1. Instalar Heroku (window: si no esta instalado)
+2. Levantar Heroku
+   > heroku login
+   
+   - Clonar heroku, si el proyecto no esta en un repo: 
+      > heroku git:clone -a node-bakery-formula 
+ 3. Deploy Heroku
+  > git add .
+  > git commit -am "make it better"
+  > git push heroku master
+  
+ Notas:
+   - Relanzar Heroku: > heroku restart
+   - Ver logs: heroku logs -n 200
+   - Procesos de consola de heroku: > heroku run rails console
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
