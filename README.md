@@ -1,6 +1,8 @@
 # node-server-chat-personal
 Chat personal realizado con NodeJS y Socket.io
 
+ver: https://github.com/wlopera/react_client_chat_pwa_app
+
 ## Código fuente: ChatPersonal\server\server.js
 ```
 const express = require("express");
