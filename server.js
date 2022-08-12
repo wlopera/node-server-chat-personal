@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
   socket.on("login", (user) => {
     console.log("Usuario conectado...");
     name = user;
-    socket.broadcast.emit("mensajes", {
+    socket.broadcast.emit("messages", {
       name,
       message: `${name} ha entrado a la sala del chat`,
     });
