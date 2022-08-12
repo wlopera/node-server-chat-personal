@@ -1,5 +1,6 @@
 const express = require("express");
 const http = require("http");
+const tools = require("./util/tools");
 
 // Inicializamos nuestra aplicacion
 const app = express();
@@ -21,24 +22,32 @@ io.on("connection", (socket) => {
 
   // Cada vez que un cliente se conecta se llama esta funcion
   socket.on("login", (user) => {
-    console.log("Usuario conectado...");
     name = user;
     socket.broadcast.emit("messages", {
+      type: "login",
       name,
       message: `${name} ha entrado a la sala del chat`,
+      time: tools.getTime(),
     });
   });
 
   // Recibir un mensaje y enviar al grupo
   socket.on("message", (name, message) => {
-    io.emit("messages", { name, message });
+    socket.broadcast.emit("messages", {
+      type: "body",
+      name,
+      message,
+      time: tools.getTime(),
+    });
   });
 
   // Notificar salida de usuario del grupo (disconnect: palabra reservada)
   socket.on("disconnect", () => {
     socket.broadcast.emit("messages", {
-      servidor: "Servidor",
+      type: "logout",
+      name: "Servidor",
       message: `${name} ha abandonado la sala`,
+      time: tools.getTime(),
     });
   });
 });
