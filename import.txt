@@ -41,7 +41,7 @@ Configurar tareas de arranque del servidor
  - Iniciamos el servidor: npm run dev
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
-Publicar en Heroku: El repo debe ser: master
+Publicar en Heroku: El repo debe ser: master (IMPORTANTE)
 -----------------------------------------------------------------------------
 1. Instalar Heroku (window: si no esta instalado)
 2. Levantar Heroku
@@ -81,7 +81,10 @@ Ajustar el package json
 - server.js
 -----------------------------------------------------------------------------
 // Iniciamos el servidor ==> Heroku necesita: process.env.PORT para asignar puerto
-server.listen(process.env.PORT || 3000, () =>
-  console.log("Servidor inicado en el puerto 3000")
+server.listen(process.env.PORT || 8585, () =>
+  console.log("Servidor iniciado en el puerto " + process.env.PORT || 8585)
 );
 -----------------------------------------------------------------------------
+
+URL DE INICIACION DEL API:
+   https://node-chat-personal.herokuapp.com/
