@@ -15,7 +15,7 @@ require("dotenv").config();
 // Creamos nuestro conexion socket
 const io = require("socket.io")(server, {
   cors: {
-    origin: cors(),
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
