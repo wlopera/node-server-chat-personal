@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const tools = require("./util/tools");
+const cors = require("cors");
 
 // Inicializamos nuestra aplicacion
 const app = express();
@@ -14,7 +15,7 @@ require("dotenv").config();
 // Creamos nuestro conexion socket
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: cors(),
     methods: ["GET", "POST"],
   },
 });
