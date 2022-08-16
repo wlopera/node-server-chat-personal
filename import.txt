@@ -49,9 +49,9 @@ Publicar en Heroku: El repo debe ser: master
    - Clonar heroku, si el proyecto no esta en un repo: 
       > heroku git:clone -a node-bakery-formula 
  3. Deploy Heroku
-  > git add .
-  > git commit -am "make it better"
-  > git push heroku master
+   > cd my-project/
+   > git init (opcional)
+   > heroku git:remote -a node-chat-personal
   
  Notas:
    - Relanzar Heroku: > heroku restart
