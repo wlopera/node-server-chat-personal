@@ -9,6 +9,7 @@ $ npm init -y
   - express
   - socket.io 
   - nodemon (solo para desarrollo: npm i -D nodemon)
+  - dotenv (manejo del puerto)
 
 -----------------------------------------------------------------------------
 - Agregar archivo: .gitignore -> control de data al repo

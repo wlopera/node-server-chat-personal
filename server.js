@@ -8,6 +8,9 @@ const app = express();
 // Creaamos el servidor
 const server = http.createServer(app);
 
+// Configurar manejo de variables de ambiente
+require("dotenv").config();
+
 // Creamos nuestro conexion socket
 const io = require("socket.io")(server, {
   cors: {
