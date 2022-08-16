@@ -53,10 +53,28 @@ Publicar en Heroku: El repo debe ser: master
    > git init (opcional)
    > heroku git:remote -a node-chat-personal
   
+  > git add . (opcional)
+  > git commit -am "make it better"
+  > git push heroku master
+
  Notas:
    - Relanzar Heroku: > heroku restart
    - Ver logs: heroku logs -n 200
    - Procesos de consola de heroku: > heroku run rails console
 -----------------------------------------------------------------------------
+Ajustar el package json
+-----------------------------------------------------------------------------
+// tarea start debe ser la primera
+  "scripts": {
+    "start": "node index.js",
+    "dev": "set DEBUG=app:* & nodemon index.js"
+  },
+  
+  // Puede requerir la version de node y npm
+  "engines": {
+    "node": "14.17.0",
+    "npm": "8.1.3"
+  },
+
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
