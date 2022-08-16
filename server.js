@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
 
   // Recibir un mensaje y enviar al grupo
   socket.on("message", (name, message) => {
-    socket.broadcast.emit("messages", {
+    io.emit("messages", {
       type: "body",
       name,
       message,
