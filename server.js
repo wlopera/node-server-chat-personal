@@ -57,5 +57,5 @@ io.on("connection", (socket) => {
 
 // Iniciamos el servidor ==> Heroku necesita: process.env.PORT para asignar puerto
 server.listen(process.env.PORT || 8585, () =>
-  console.log("Servidor inicado en el puerto " + process.env.PORT || 8585)
+  console.log("Servidor iniciado en el puerto " + process.env.PORT || 8585)
 );
