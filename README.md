@@ -7,6 +7,7 @@ ver: https://github.com/wlopera/react_client_chat_pwa_app
 ```
 const express = require("express");
 const http = require("http");
+const tools = require("./util/tools");
 
 // Inicializamos nuestra aplicacion
 const app = express();
@@ -14,10 +15,13 @@ const app = express();
 // Creaamos el servidor
 const server = http.createServer(app);
 
+// Configurar manejo de variables de ambiente
+require("dotenv").config();
+
 // Creamos nuestro conexion socket
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -28,31 +32,52 @@ io.on("connection", (socket) => {
 
   // Cada vez que un cliente se conecta se llama esta funcion
   socket.on("login", (user) => {
-    console.log("Usuario conectado...");
+    let users = [];
+
+    socket.data.username = user;
+
+    for (let [id, socket] of io.of("/").sockets) {
+      users.push({
+        id,
+        username: socket.data.username,
+      });
+    }
+
     name = user;
-    socket.broadcast.emit("mensajes", {
+    io.emit("messages", {
+      type: "login",
       name,
       message: `${name} ha entrado a la sala del chat`,
+      time: tools.getTime(),
+      users: users,
     });
   });
 
   // Recibir un mensaje y enviar al grupo
   socket.on("message", (name, message) => {
-    io.emit("messages", { name, message });
+    io.emit("messages", {
+      type: "body",
+      name,
+      message,
+      time: tools.getTime(),
+    });
   });
 
   // Notificar salida de usuario del grupo (disconnect: palabra reservada)
   socket.on("disconnect", () => {
     socket.broadcast.emit("messages", {
-      servidor: "Servidor",
+      type: "logout",
+      name,
       message: `${name} ha abandonado la sala`,
+      time: tools.getTime(),
     });
   });
 });
 
-// Iniciamos el servidor
-server.listen(3000, () => console.log("Servidor inicado en el puerto 3000"));
-
+// Iniciamos el servidor ==> Heroku necesita: process.env.PORT para asignar puerto
+server.listen(process.env.PORT || 8585, () =>
+  console.log("Servidor iniciado en el puerto " + process.env.PORT || 8585)
+);
 ```
 # Version en la WEB
 ```

@@ -1,7 +1,6 @@
 const express = require("express");
 const http = require("http");
 const tools = require("./util/tools");
-const cors = require("cors");
 
 // Inicializamos nuestra aplicacion
 const app = express();
@@ -26,12 +25,24 @@ io.on("connection", (socket) => {
 
   // Cada vez que un cliente se conecta se llama esta funcion
   socket.on("login", (user) => {
+    let users = [];
+
+    socket.data.username = user;
+
+    for (let [id, socket] of io.of("/").sockets) {
+      users.push({
+        id,
+        username: socket.data.username,
+      });
+    }
+
     name = user;
-    socket.broadcast.emit("messages", {
+    io.emit("messages", {
       type: "login",
       name,
       message: `${name} ha entrado a la sala del chat`,
       time: tools.getTime(),
+      users: users,
     });
   });
 
@@ -49,7 +60,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     socket.broadcast.emit("messages", {
       type: "logout",
-      name: "Servidor",
+      name,
       message: `${name} ha abandonado la sala`,
       time: tools.getTime(),
     });
