@@ -26,7 +26,6 @@ io.on("connection", (socket) => {
   // Cada vez que un cliente se conecta se llama esta funcion
   socket.on("login", (user) => {
     let users = [];
-
     socket.data.username = user;
 
     for (let [id, socket] of io.of("/").sockets) {
@@ -56,14 +55,26 @@ io.on("connection", (socket) => {
     });
   });
 
-  // Notificar salida de usuario del grupo (disconnect: palabra reservada)
-  socket.on("disconnect", () => {
-    socket.broadcast.emit("messages", {
-      type: "logout",
+  // Recibir un mensaje y enviar al grupo
+  socket.on("typing", (name, message) => {
+    io.emit("messages", {
+      type: "typing",
       name,
-      message: `${name} ha abandonado la sala`,
+      message,
       time: tools.getTime(),
     });
+  });
+
+  // Notificar salida de usuario del grupo (disconnect: palabra reservada)
+  socket.on("disconnect", () => {
+    if (name) {
+      socket.broadcast.emit("messages", {
+        type: "logout",
+        name,
+        message: `${name} ha abandonado la sala`,
+        time: tools.getTime(),
+      });
+    }
   });
 });
 
